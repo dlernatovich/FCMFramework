@@ -7,7 +7,9 @@ For the ```AppDelegate``` use this code
 
 ```swift
 import UIKit
-import Firebase
+import FCMFramework
+import FirebaseCore
+import FirebaseMessaging
 
 /// Current application
 @UIApplicationMain
@@ -110,6 +112,7 @@ For monitoring of the changes use this code
 
 ```swift 
 import UIKit
+import FCMFramework
 
 class ViewController: UIViewController {
     
