@@ -16,7 +16,7 @@ import UIKit
 /// - Parameter message: {@link String} value of the message
 func debugPrint(with message: String) {
     #if DEBUG
-    print(message);
+    print("FCMFramework: \(message)");
     #endif
 }
 
