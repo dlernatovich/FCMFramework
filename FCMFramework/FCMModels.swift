@@ -21,6 +21,11 @@ public struct FCMModel: Codable, Hashable {
     var body: String;
     /// {@link Bool} value if it readed
     var isReaded: Bool;
+    /// Method which provide the hash functionality
+    /// - Parameter hasher: instance of the {@link Hasher}
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
     /// Method which provide the compare functionality
     /// - Parameters:
     ///   - lhs: instance of the {@link FCMModel}

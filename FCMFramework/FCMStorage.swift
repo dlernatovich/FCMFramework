@@ -32,3 +32,20 @@ public extension FCMStorage {
     /// {@link Int} value of the unreaded notifications
     var fcmUnreadedCount: Int { return fcmUnreadedNotifications.count }
 }
+
+/// Extension which provide the clearing of the cached notifications
+public extension FCMStorage {
+    /// Method which provide the clearing of the cached notifications
+    func fcmClear() { FCMInternalStorage.shared.clear() }
+}
+
+/// Extension which provide the update of the reade state
+public extension FCMStorage {
+    /// Method which provide the modify readed state for the message
+    /// - Parameters:
+    ///   - id: {@link String} value of the ID
+    ///   - isReaded: {@link Bool} value if it readed
+    func fcmUpdate(withId id: String?, andReaded isReaded: Bool) {
+        FCMInternalStorage.shared.updateReadedState(withId: id, andState: isReaded);
+    }
+}

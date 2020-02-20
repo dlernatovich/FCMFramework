@@ -36,7 +36,7 @@ struct FCMInternalStorage: Codable {
 }
 
 // ================================================================================================================
-// MARK: - Structures extensions
+// MARK: - Insert functionality
 // ================================================================================================================
 // FCMInternalStorage
 /// Extension which provide the insertion functionality
@@ -50,10 +50,13 @@ extension FCMInternalStorage {
             let oldCount: Int = model.items.count;
             // Append fcm messages
             for fcm in models {
-                // Remove message before adding if we need to force override
-                if forced == true { model.items.remove(fcm) }
-                // Insert message
-                model.items.insert(fcm);
+                // Update message if we need to force override
+                if forced == true {
+                    model.items.update(with: fcm)
+                } else {
+                    // Insert message
+                    model.items.insert(fcm);
+                }
             }
             // Caclulate new count
             let newCount: Int = model.items.count;
@@ -75,6 +78,38 @@ extension FCMInternalStorage {
                 fcmSendReadNotification(model: first);
             }
             // Save models
+            self.models = model;
+        }
+    }
+}
+
+// ================================================================================================================
+// MARK: - Clear cached
+// ================================================================================================================
+/// Extension which provide the clearing cached messages functionality
+extension FCMInternalStorage {
+    /// Method which provide the clearing functional
+    mutating func clear() {
+        self.models = FCMModelContainer();
+    }
+}
+
+// ================================================================================================================
+// MARK: - Modify reading state
+// ================================================================================================================
+/// Extension which provide the modify readable state functionality
+extension FCMInternalStorage {
+    /// Method which provide the modify readed state for the message id
+    /// - Parameters:
+    ///   - id: {@link String} value of the ID
+    ///   - isReaded: {@link Bool} value if it readed
+    mutating func updateReadedState(withId id: String?, andState isReaded: Bool) {
+        // Read models
+        if var model = self.models,
+            let id = id,
+            var first = model.items.first(where: {$0.id == id}) {
+            first.isReaded = isReaded;
+            model.items.update(with: first);
             self.models = model;
         }
     }
