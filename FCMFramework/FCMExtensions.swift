@@ -1,8 +1,6 @@
 //
-//  FCMExtensions.swift
-//  Alamofire
-//
-//  Created by Dmitry Lernatovich on 20.02.2020.
+//  Created by Dmitry Lernatovich on 14.02.2020.
+//  Copyright © 2020 Dmitry Lernatovich. All rights reserved.
 //
 
 import UIKit
