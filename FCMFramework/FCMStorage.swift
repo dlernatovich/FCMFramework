@@ -38,7 +38,8 @@ public extension FCMStorage {
 /// Extension which provide the clearing of the cached notifications
 public extension FCMStorage {
     /// Method which provide the clearing of the cached notifications
-    func fcmClear() { FCMInternalStorage.shared.clear() }
+    /// - Parameter notify: if it need notification
+    func fcmClear(notify: Bool = true) { FCMInternalStorage.shared.clear(notify: notify) }
 }
 
 // MARK: - Update
@@ -48,14 +49,17 @@ public extension FCMStorage {
     /// - Parameters:
     ///   - id: {@link String} value of the ID
     ///   - isReaded: {@link Bool} value if it readed
-    func fcmUpdate(withId id: String?, andReaded isReaded: Bool) {
-        FCMInternalStorage.shared.updateReadedState(withId: id, andState: isReaded);
+    ///   - notify: if it need notification
+    func fcmUpdate(withId id: String?, andReaded isReaded: Bool, notify: Bool = true) {
+        FCMInternalStorage.shared.updateReadedState(withId: id, andState: isReaded, notify: notify);
     }
     
     /// Method which provide the updating models
-    /// - Parameter model: instance of the {@link FCMModel}
-    func fcmUpdate(model: FCMModel?) {
-        FCMInternalStorage.shared.update(model: model);
+    /// - Parameters:
+    ///   - model: instance of the {@link FCMModel}
+    ///   - notify: if it need notification
+    func fcmUpdate(model: FCMModel?, notify: Bool = true) {
+        FCMInternalStorage.shared.update(model: model, notify: notify);
     }
 }
 

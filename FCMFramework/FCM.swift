@@ -18,7 +18,9 @@ func debugPrint(with message: String) {
 }
 
 /// Method which provide the sending of the notification when items is updating
-func fcmSendUpdate() {
+/// - Parameter notify: if it need notification
+func fcmSendUpdate(notify: Bool = true) {
+    guard notify == true else { return }
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         NotificationCenter.default
             .post(name: FCMConstants.notificationUpdate, object: nil, userInfo: nil);
@@ -26,8 +28,12 @@ func fcmSendUpdate() {
 }
 
 /// Method which provide the sending of the recieving model
-/// - Parameter model: instance of the {@link FCMModel}
-func fcmSendRecieveNotification(model: FCMModel) {
+/// - Parameters:
+///   - model: instance of the {@link FCMModel}
+///   - notify: if it need notification
+func fcmSendRecieveNotification(model: FCMModel,
+                                notify: Bool = true) {
+    guard notify == true else { return }
     let userInfo: [AnyHashable: Any] = [FCMConstants.notificationMessageKey: model];
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         NotificationCenter.default
@@ -36,8 +42,12 @@ func fcmSendRecieveNotification(model: FCMModel) {
 }
 
 /// Method which provide the sending of the recieving model
-/// - Parameter model: instance of the {@link FCMModel}
-func fcmSendReadNotification(model: FCMModel) {
+/// - Parameters:
+///   - model: instance of the {@link FCMModel}
+///   - notify: if it need notification
+func fcmSendReadNotification(model: FCMModel,
+                             notify: Bool = true) {
+    guard notify == true else { return }
     let userInfo: [AnyHashable: Any] = [FCMConstants.notificationMessageKey: model];
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         NotificationCenter.default

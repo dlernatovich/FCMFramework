@@ -89,10 +89,11 @@ extension FCMInternalStorage {
 /// Extension which provide the clearing cached messages functionality
 extension FCMInternalStorage {
     /// Method which provide the clearing functional
-    mutating func clear() {
+    /// - Parameter notify: if it need notification
+    mutating func clear(notify: Bool = true) {
         FCMDispatch.enter();
         self.models = FCMModelContainer();
-        fcmSendUpdate();
+        fcmSendUpdate(notify: notify);
         FCMDispatch.leave();
     }
 }
@@ -106,7 +107,10 @@ extension FCMInternalStorage {
     /// - Parameters:
     ///   - id: {@link String} value of the ID
     ///   - isReaded: {@link Bool} value if it readed
-    mutating func updateReadedState(withId id: String?, andState isReaded: Bool) {
+    ///   - notify: if it need notification
+    mutating func updateReadedState(withId id: String?,
+                                    andState isReaded: Bool,
+                                    notify: Bool = true) {
         FCMDispatch.enter();
         if var model = self.models,
             let id = id,
@@ -114,19 +118,22 @@ extension FCMInternalStorage {
             first.isReaded = isReaded;
             model.items.update(with: first);
             self.models = model;
-            fcmSendUpdate();
+            fcmSendUpdate(notify: notify);
         }
         FCMDispatch.leave();
     }
     
     /// Method which provide the updating model
-    /// - Parameter model: instance of {@link FCMModel}
-    mutating func update(model: FCMModel?) {
+    /// - Parameters:
+    ///   - model: instance of {@link FCMModel}
+    ///   - notify: if it need notification
+    mutating func update(model: FCMModel?,
+                         notify: Bool = true) {
         FCMDispatch.enter();
         if let model = model, var models = self.models {
             models.items.update(with: model);
             self.models = models;
-            fcmSendUpdate();
+            fcmSendUpdate(notify: notify);
         }
         FCMDispatch.leave();
     }
@@ -147,8 +154,11 @@ extension FCMInternalStorage {
     }
     
     /// Method which provide the remove models by tags
-    /// - Parameter tags: array of the tags
-    mutating func remove(by tags: [String]?) -> [FCMModel] {
+    /// - Parameters:
+    ///   - tags: array of the tags
+    ///   - notify: if it need notification
+    mutating func remove(by tags: [String]?,
+                         notify: Bool = true) -> [FCMModel] {
         FCMDispatch.enter();
         var removed: [FCMModel] = self.search(by: tags);
         guard removed.count > 0, var models = self.models else {
@@ -157,7 +167,7 @@ extension FCMInternalStorage {
         }
         for item in removed { models.items.remove(item) }
         self.models = models;
-        fcmSendUpdate();
+        fcmSendUpdate(notify: notify);
         FCMDispatch.leave();
         return removed;
     }
