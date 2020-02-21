@@ -90,7 +90,10 @@ extension FCMInternalStorage {
 extension FCMInternalStorage {
     /// Method which provide the clearing functional
     mutating func clear() {
+        FCMDispatch.enter();
         self.models = FCMModelContainer();
+        fcmSendUpdate();
+        FCMDispatch.leave();
     }
 }
 
@@ -104,13 +107,58 @@ extension FCMInternalStorage {
     ///   - id: {@link String} value of the ID
     ///   - isReaded: {@link Bool} value if it readed
     mutating func updateReadedState(withId id: String?, andState isReaded: Bool) {
-        // Read models
+        FCMDispatch.enter();
         if var model = self.models,
             let id = id,
             var first = model.items.first(where: {$0.id == id}) {
             first.isReaded = isReaded;
             model.items.update(with: first);
             self.models = model;
+            fcmSendUpdate();
         }
+        FCMDispatch.leave();
+    }
+    
+    /// Method which provide the updating model
+    /// - Parameter model: instance of {@link FCMModel}
+    mutating func update(model: FCMModel?) {
+        FCMDispatch.enter();
+        if let model = model, var models = self.models {
+            models.items.update(with: model);
+            self.models = models;
+            fcmSendUpdate();
+        }
+        FCMDispatch.leave();
+    }
+}
+
+// ================================================================================================================
+// MARK: - Tags
+// ================================================================================================================
+/// Extension which provide the tags serach
+extension FCMInternalStorage {
+    
+    /// Method which provide the search by tags
+    /// - Parameter tags: array of the tags
+    func search(by tags: [String]?) -> [FCMModel] {
+        guard let tags = tags,
+            let notifications: Set<FCMModel> = self.models?.items else { return [] }
+        return Array(notifications.filter({$0.contains(tags: tags) == true}));
+    }
+    
+    /// Method which provide the remove models by tags
+    /// - Parameter tags: array of the tags
+    mutating func remove(by tags: [String]?) -> [FCMModel] {
+        FCMDispatch.enter();
+        var removed: [FCMModel] = self.search(by: tags);
+        guard removed.count > 0, var models = self.models else {
+            FCMDispatch.leave();
+            return [];
+        }
+        for item in removed { models.items.remove(item) }
+        self.models = models;
+        fcmSendUpdate();
+        FCMDispatch.leave();
+        return removed;
     }
 }

@@ -9,8 +9,6 @@ import FirebaseMessaging
 
 /// Protocol which provide the FCM protocols
 public protocol FCMProtocol: AnyObject {
-    /// Instance of the {@link DispatchGroup}
-    var dispatch: DispatchGroup { get }
     /// Channels array
     var channels: [String] { get }
 }
@@ -69,9 +67,11 @@ public extension FCMProtocol {
     
     /// Method which provide the subscribe on channels
     func fcmSubscribeOnChannels(channels: [String]) {
+        FCMDispatch.enter();
         for channel in channels {
             Messaging.messaging().subscribe(toTopic: channel);
         }
+        FCMDispatch.leave();
     }
 }
 
@@ -165,7 +165,7 @@ public extension FCMProtocol {
     
     /// Method which provide the fetching from the notification center
     private func fcmCenterFetch() {
-        self.dispatch.enter();
+        FCMDispatch.enter();
         UNUserNotificationCenter.current().getDeliveredNotifications
             { [weak self] (notifications) in
                 self?.fcmCenterFetch(notifications: notifications);
@@ -187,7 +187,7 @@ public extension FCMProtocol {
             
         }
         FCMInternalStorage.shared.insert(models: models);
-        self.dispatch.leave();
+        FCMDispatch.leave();
     }
     
     /// Method which provide the fetching from the user info
@@ -202,7 +202,7 @@ public extension FCMProtocol {
                               withId id: String? = nil,
                               readed: Bool = false,
                               forced: Bool = false) {
-        self.dispatch.enter();
+        FCMDispatch.enter();
         if let date = date,
             let id = id {
             let object = FCMModel(id: id,
@@ -212,7 +212,7 @@ public extension FCMProtocol {
                                   isReaded: readed);
             FCMInternalStorage.shared.insert(models: [object], forced: forced);
         }
-        self.dispatch.leave();
+        FCMDispatch.leave();
     }
     
 }

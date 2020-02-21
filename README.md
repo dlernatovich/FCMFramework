@@ -17,8 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// Instance of the {@link UIWindow}
     var window: UIWindow?
-    /// Instance of the {@link DispatchGroup}
-    var dispatch: DispatchGroup = DispatchGroup();
     /// Array of the channels
     var channels: [String] { return ["da_info_test_ios"] }
     

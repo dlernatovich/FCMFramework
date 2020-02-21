@@ -19,22 +19,28 @@ func debugPrint(with message: String) {
 
 /// Method which provide the sending of the notification when items is updating
 func fcmSendUpdate() {
-    NotificationCenter.default
-        .post(name: FCMConstants.notificationUpdate, object: nil, userInfo: nil);
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        NotificationCenter.default
+            .post(name: FCMConstants.notificationUpdate, object: nil, userInfo: nil);
+    }
 }
 
 /// Method which provide the sending of the recieving model
 /// - Parameter model: instance of the {@link FCMModel}
 func fcmSendRecieveNotification(model: FCMModel) {
     let userInfo: [AnyHashable: Any] = [FCMConstants.notificationMessageKey: model];
-    NotificationCenter.default
-        .post(name: FCMConstants.notificationRecieved, object: nil, userInfo: userInfo);
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        NotificationCenter.default
+            .post(name: FCMConstants.notificationRecieved, object: nil, userInfo: userInfo);
+    }
 }
 
 /// Method which provide the sending of the recieving model
 /// - Parameter model: instance of the {@link FCMModel}
 func fcmSendReadNotification(model: FCMModel) {
     let userInfo: [AnyHashable: Any] = [FCMConstants.notificationMessageKey: model];
-    NotificationCenter.default
-        .post(name: FCMConstants.notificationReaded, object: nil, userInfo: userInfo);
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        NotificationCenter.default
+            .post(name: FCMConstants.notificationReaded, object: nil, userInfo: userInfo);
+    }
 }

@@ -5,10 +5,11 @@
 
 import UIKit
 
+// MARK: - Protocol
 /// Protocol which provide the FCM storage
 public protocol FCMStorage: AnyObject { }
 
-// FCMStorage
+// MARK: - Variables
 /// Extension which provide the storage variables
 public extension FCMStorage {
     // APNS Token
@@ -33,12 +34,14 @@ public extension FCMStorage {
     var fcmUnreadedCount: Int { return fcmUnreadedNotifications.count }
 }
 
+// MARK: - Clear
 /// Extension which provide the clearing of the cached notifications
 public extension FCMStorage {
     /// Method which provide the clearing of the cached notifications
     func fcmClear() { FCMInternalStorage.shared.clear() }
 }
 
+// MARK: - Update
 /// Extension which provide the update of the reade state
 public extension FCMStorage {
     /// Method which provide the modify readed state for the message
@@ -47,5 +50,51 @@ public extension FCMStorage {
     ///   - isReaded: {@link Bool} value if it readed
     func fcmUpdate(withId id: String?, andReaded isReaded: Bool) {
         FCMInternalStorage.shared.updateReadedState(withId: id, andState: isReaded);
+    }
+    
+    /// Method which provide the updating models
+    /// - Parameter model: instance of the {@link FCMModel}
+    func fcmUpdate(model: FCMModel?) {
+        FCMInternalStorage.shared.update(model: model);
+    }
+}
+
+// MARK: - Tags
+/// Notifications with tags performing
+public extension FCMStorage {
+    /// Method which provide the get all notifications with tags
+    /// - Parameter tags: array of tags
+    func fcmNotifications(tags: [String]?) -> [FCMModel] {
+        return FCMInternalStorage.shared.search(by: tags);
+    }
+    /// Method which provide the get all notifications with tags
+    /// - Parameter tags: array of tags
+    func fcmReadedNotifications(tags: [String]?) -> [FCMModel] {
+        return fcmNotifications(tags: tags).filter({$0.isReaded == true});
+    }
+    /// Method which provide the get all notifications with tags
+    /// - Parameter tags: array of tags
+    func fcmUnreadedNotifications(tags: [String]?) -> [FCMModel] {
+        return fcmNotifications(tags: tags).filter({$0.isReaded == false});
+    }
+    /// Method which provide the get all notifications with tags
+    /// - Parameter tags: array of tags
+    func fcmAllCount(tags: [String]?) -> Int {
+        return fcmNotifications(tags: tags).count;
+    }
+    /// Method which provide the get all notifications with tags
+    /// - Parameter tags: array of tags
+    func fcmReadedCount(tags: [String]?) -> Int {
+        return fcmReadedNotifications(tags: tags).count;
+    }
+    /// Method which provide the get all notifications with tags
+    /// - Parameter tags: array of tags
+    func fcmUnreadedCount(tags: [String]?) -> Int {
+        return fcmUnreadedNotifications(tags: tags).count;
+    }
+    /// Method which provide the remove models by tags
+    /// - Parameter tags: array of the tags
+    func fcmRemove(by tags: [String]?) -> [FCMModel] {
+        return FCMInternalStorage.shared.remove(by: tags);
     }
 }
