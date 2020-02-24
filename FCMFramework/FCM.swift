@@ -62,6 +62,7 @@ func fcmSendReadNotification(model: FCMModel,
 public func fcmSubscribe(channels channelNames:[String]?) {
     guard let channels = channelNames else { return }
     for channel in channels {
+        debugPrint(with: "Subscribed for \(channel)");
         Messaging.messaging().subscribe(toTopic: channel);
     }
 }
@@ -71,6 +72,7 @@ public func fcmSubscribe(channels channelNames:[String]?) {
 public func fcmUnsubscribe(channels channelNames:[String]?) {
     guard let channels = channelNames else { return }
     for channel in channels {
+        debugPrint(with: "Unsubscribed from \(channel)");
         Messaging.messaging().unsubscribe(fromTopic: channel);
     }
 }

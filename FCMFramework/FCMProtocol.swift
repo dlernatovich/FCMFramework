@@ -80,9 +80,7 @@ extension FCMProtocol {
     /// Method which provide the subscribe on channels
     func fcmSubscribeOnChannels(channels: [String]) {
         FCMDispatch.enter();
-        for channel in channels {
-            Messaging.messaging().subscribe(toTopic: channel);
-        }
+        fcmSubscribe(channels: channels);
         FCMDispatch.leave();
     }
 }
