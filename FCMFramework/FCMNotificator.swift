@@ -5,6 +5,9 @@
 
 import UIKit
 
+// ================================================================================================================
+// MARK: - FCMNotificator
+// ================================================================================================================
 /// Protocol which provide the fcm functional
 @objc public protocol FCMNotificator: AnyObject {
     /// Method which provide the on recieved updates
@@ -19,7 +22,9 @@ import UIKit
     @objc func fcmReadMessage(notification: Notification);
 }
 
-// FCMNotificator
+// ================================================================================================================
+// MARK: - Subscribe
+// ================================================================================================================
 /// Extension which provide the subscribe for notification
 public extension FCMNotificator {
     /// Method which provide the subscribe for the notifications
@@ -44,6 +49,9 @@ public extension FCMNotificator {
     }
 }
 
+// ================================================================================================================
+// MARK: - Unpack message
+// ================================================================================================================
 /// Retrieve message extension
 public extension FCMNotificator {
     /// Method which provide the unpack message from notification

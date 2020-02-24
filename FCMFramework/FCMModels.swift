@@ -6,9 +6,8 @@
 import UIKit
 
 // ================================================================================================================
-// MARK: - Structs
+// MARK: - FCMModel
 // ================================================================================================================
-// FCMModel
 /// Struct which provide the FCM model container
 public struct FCMModel: Codable, Hashable {
     /// {@link String} value of the id
@@ -35,6 +34,9 @@ public struct FCMModel: Codable, Hashable {
     public static func == (lhs: FCMModel, rhs: FCMModel) -> Bool { return lhs.id == rhs.id }
 }
 
+// ================================================================================================================
+// MARK: - Add tags functionality
+// ================================================================================================================
 /// Add tag functional
 public extension FCMModel {
     /// Method which provide the adding of the tag
@@ -48,6 +50,9 @@ public extension FCMModel {
     }
 }
 
+// ================================================================================================================
+// MARK: - Search tags functionality
+// ================================================================================================================
 /// Search tag extension
 public extension FCMModel {
     /// Method which provide the checking if the model contain tags

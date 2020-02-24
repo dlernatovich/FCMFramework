@@ -5,10 +5,10 @@
 
 import UIKit
 
+
 // ================================================================================================================
-// MARK: - Property wrappers
+// MARK: - Date wrapper
 // ================================================================================================================
-// Date wrapper
 /// Positive wrapper
 @propertyWrapper
 struct DateValue: Codable, Hashable {
@@ -26,7 +26,9 @@ struct DateValue: Codable, Hashable {
     }
 }
 
-// Storable object value
+// ================================================================================================================
+// MARK: - Storable object value
+// ================================================================================================================
 /// Positive wrapper
 @propertyWrapper
 struct StorableObjectValue<T: Codable>: Codable {
@@ -63,7 +65,9 @@ struct StorableObjectValue<T: Codable>: Codable {
     }
 }
 
-// Storable string value
+// ================================================================================================================
+// MARK: - Storable string value
+// ================================================================================================================
 /// Positive wrapper
 @propertyWrapper
 struct StorableStringValue: Codable {
@@ -72,6 +76,32 @@ struct StorableStringValue: Codable {
     /// Wrapped value
     var wrappedValue: String? {
         get { return UserDefaults.standard.object(forKey: key) as? String }
+        set {
+            guard let newValue = newValue else {
+                UserDefaults.standard.removeObject(forKey: key);
+                return;
+            }
+            UserDefaults.standard.set(newValue, forKey: key);
+        }
+    }
+    /// Constructor for the wrapper
+    /// - Parameter initialValue: initial value
+    init(_ key: String) {
+        self.key = key;
+    }
+}
+
+// ================================================================================================================
+// MARK: - Storable array value
+// ================================================================================================================
+/// Positive wrapper
+@propertyWrapper
+struct StorableArrayValue<T: Codable>: Codable {
+    /// Key value
+    var key: String;
+    /// Wrapped value
+    var wrappedValue: Array<T>? {
+        get { return UserDefaults.standard.object(forKey: key) as? Array<T> }
         set {
             guard let newValue = newValue else {
                 UserDefaults.standard.removeObject(forKey: key);

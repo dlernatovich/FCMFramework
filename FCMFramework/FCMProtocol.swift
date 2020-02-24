@@ -7,12 +7,18 @@ import UIKit
 import FirebaseCore
 import FirebaseMessaging
 
+// ================================================================================================================
+// MARK: - FCMProtocol
+// ================================================================================================================
 /// Protocol which provide the FCM protocols
 public protocol FCMProtocol: AnyObject {
     /// Channels array
     var channels: [String] { get }
 }
 
+// ================================================================================================================
+// MARK: - Initialize functional
+// ================================================================================================================
 /// Extension which provide the
 public extension FCMProtocol {
     /// Method which provide the initialize of the {@link FirebaseApp}
@@ -42,6 +48,9 @@ public extension FCMProtocol {
     
 }
 
+// ================================================================================================================
+// MARK: - Registering for notifications
+// ================================================================================================================
 /// Extension which provide the performing action when the application was registered for the remote notification
 public extension FCMProtocol {
     
@@ -62,8 +71,11 @@ public extension FCMProtocol {
     }
 }
 
+// ================================================================================================================
+// MARK: - fcmSubscribeOnChannels
+// ================================================================================================================
 /// Protocol which provide to subscribe for the channels
-public extension FCMProtocol {
+extension FCMProtocol {
     
     /// Method which provide the subscribe on channels
     func fcmSubscribeOnChannels(channels: [String]) {
@@ -75,6 +87,9 @@ public extension FCMProtocol {
     }
 }
 
+// ================================================================================================================
+// MARK: - Notification methods
+// ================================================================================================================
 /// Extension which provide the action when the notification was recieved
 public extension FCMProtocol {
     
@@ -120,6 +135,9 @@ public extension FCMProtocol {
     
 }
 
+// ================================================================================================================
+// MARK: - FCM Messaging for override
+// ================================================================================================================
 /// Extension which provide the recieving of the Messaging
 public extension FCMProtocol {
     /// Method which provide the recieving of the registration tokken for the firebase messaging
@@ -142,6 +160,9 @@ public extension FCMProtocol {
     }
 }
 
+// ================================================================================================================
+// MARK: - Fetch
+// ================================================================================================================
 /// Extension which provide the fetching functionality
 public extension FCMProtocol {
     
@@ -182,7 +203,8 @@ public extension FCMProtocol {
                                   date: notification.date,
                                   title: userInfo.title ?? "",
                                   body: userInfo.body ?? "",
-                                  isReaded: false);
+                                  isReaded: false,
+                                  tags: FCMInternalStorage.shared.tags);
             models.append(object);
             
         }
@@ -209,7 +231,8 @@ public extension FCMProtocol {
                                   date: date,
                                   title: userInfo.title ?? "",
                                   body: userInfo.body ?? "",
-                                  isReaded: readed);
+                                  isReaded: readed,
+                                  tags: FCMInternalStorage.shared.tags);
             FCMInternalStorage.shared.insert(models: [object], forced: forced);
         }
         FCMDispatch.leave();

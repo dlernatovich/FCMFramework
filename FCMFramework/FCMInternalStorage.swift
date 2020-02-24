@@ -5,7 +5,9 @@
 
 import UIKit
 
+// ================================================================================================================
 // FCMModelContainer
+// ================================================================================================================
 /// Container for the {@link FCMModel}
 struct FCMModelContainer: Codable {
     /// Set of the {@link FCMModel}
@@ -31,6 +33,8 @@ struct FCMInternalStorage: Codable {
     @StorableStringValue("k3sf4vek3cxvv6rdothq9egwqxp2a9qo6zyork9v") var fcmToken: String?;
     /// Instance of the {@link FCMModelContainer}
     @StorableObjectValue<FCMModelContainer>("nyd6wqoe8jeovsqxrxbm4cadn88c5r5dscag7wav") var models: FCMModelContainer?;
+    /// Array of the tags
+    @StorableArrayValue<String>("8k8j5rc77ydi47fo2hginm9sw3pbrhqvsxre5fdc") var tags: [String]?;
     /// Default constructor
     private init() { if models == nil { models = FCMModelContainer() } }
 }
@@ -38,7 +42,6 @@ struct FCMInternalStorage: Codable {
 // ================================================================================================================
 // MARK: - Insert functionality
 // ================================================================================================================
-// FCMInternalStorage
 /// Extension which provide the insertion functionality
 extension FCMInternalStorage {
     /// Method which provide the insert of the model
@@ -170,5 +173,37 @@ extension FCMInternalStorage {
         fcmSendUpdate(notify: notify);
         FCMDispatch.leave();
         return removed;
+    }
+}
+
+// ================================================================================================================
+// MARK: - Tags managements
+// ================================================================================================================
+/// Extension which provide the tags serach
+extension FCMInternalStorage {
+    /// Method which provide the adding of the tags
+    /// - Parameter tags: array of the tags
+    mutating func add(tags: [String]?) {
+        guard let tags = tags else { return }
+        FCMDispatch.enter();
+        if (self.tags == nil) { self.tags = [] }
+        self.tags?.append(contentsOf: tags);
+        FCMDispatch.leave();
+    }
+    
+    /// Method which provide the removing tags
+    /// - Parameter tags: array of the tags
+    mutating func remove(tags: [String]?) {
+        guard let tags = tags else { return }
+        FCMDispatch.enter();
+        self.tags?.removeAll(where: {tags.contains($0)});
+        FCMDispatch.leave();
+    }
+    
+    /// Method which provide the clearing tags
+    mutating func clearTags() {
+        FCMDispatch.enter();
+        self.tags = nil;
+        FCMDispatch.leave();
     }
 }

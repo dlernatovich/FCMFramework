@@ -4,6 +4,8 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseMessaging
 
 // ================================================================================================================
 // MARK: - Functions
@@ -52,5 +54,23 @@ func fcmSendReadNotification(model: FCMModel,
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         NotificationCenter.default
             .post(name: FCMConstants.notificationReaded, object: nil, userInfo: userInfo);
+    }
+}
+
+/// Method which provide the subscribe for the channels
+/// - Parameter channelNames: array of the channel names
+public func fcmSubscribe(channels channelNames:[String]?) {
+    guard let channels = channelNames else { return }
+    for channel in channels {
+        Messaging.messaging().subscribe(toTopic: channel);
+    }
+}
+
+/// Method which provide the unsubscribe for the channels
+/// - Parameter channelNames: array of the channel names
+public func fcmUnsubscribe(channels channelNames:[String]?) {
+    guard let channels = channelNames else { return }
+    for channel in channels {
+        Messaging.messaging().unsubscribe(fromTopic: channel);
     }
 }

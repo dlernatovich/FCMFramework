@@ -5,11 +5,15 @@
 
 import UIKit
 
+// ================================================================================================================
 // MARK: - Protocol
+// ================================================================================================================
 /// Protocol which provide the FCM storage
 public protocol FCMStorage: AnyObject { }
 
+// ================================================================================================================
 // MARK: - Variables
+// ================================================================================================================
 /// Extension which provide the storage variables
 public extension FCMStorage {
     // APNS Token
@@ -34,7 +38,9 @@ public extension FCMStorage {
     var fcmUnreadedCount: Int { return fcmUnreadedNotifications.count }
 }
 
+// ================================================================================================================
 // MARK: - Clear
+// ================================================================================================================
 /// Extension which provide the clearing of the cached notifications
 public extension FCMStorage {
     /// Method which provide the clearing of the cached notifications
@@ -42,7 +48,9 @@ public extension FCMStorage {
     func fcmClear(notify: Bool = true) { FCMInternalStorage.shared.clear(notify: notify) }
 }
 
+// ================================================================================================================
 // MARK: - Update
+// ================================================================================================================
 /// Extension which provide the update of the reade state
 public extension FCMStorage {
     /// Method which provide the modify readed state for the message
@@ -63,7 +71,9 @@ public extension FCMStorage {
     }
 }
 
+// ================================================================================================================
 // MARK: - Tags
+// ================================================================================================================
 /// Notifications with tags performing
 public extension FCMStorage {
     /// Method which provide the get all notifications with tags
@@ -101,4 +111,18 @@ public extension FCMStorage {
     func fcmRemove(by tags: [String]?) -> [FCMModel] {
         return FCMInternalStorage.shared.remove(by: tags);
     }
+}
+
+// ================================================================================================================
+// MARK: - Tags managements
+// ================================================================================================================
+extension FCMStorage {
+    /// Method which provide the adding of the tags
+    /// - Parameter tags: array of the tags
+    func add(tags: [String]?) { FCMInternalStorage.shared.add(tags: tags) }
+    /// Method which provide the removing tags
+    /// - Parameter tags: array of the tags
+    func remove(tags: [String]?) { FCMInternalStorage.shared.remove(tags: tags) }
+    /// Method which provide the clearing tags
+    func clearTags() { FCMInternalStorage.shared.clearTags() }
 }
