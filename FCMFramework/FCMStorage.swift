@@ -116,13 +116,13 @@ public extension FCMStorage {
 // ================================================================================================================
 // MARK: - Tags managements
 // ================================================================================================================
-extension FCMStorage {
+public extension FCMStorage {
     /// Method which provide the adding of the tags
     /// - Parameter tags: array of the tags
-    func add(tags: [String]?) { FCMInternalStorage.shared.add(tags: tags) }
+    func fcmAdd(tags: [String]?) { FCMInternalStorage.shared.add(tags: tags) }
     /// Method which provide the removing tags
     /// - Parameter tags: array of the tags
-    func remove(tags: [String]?) { FCMInternalStorage.shared.remove(tags: tags) }
+    func fcmRemove(tags: [String]?) { FCMInternalStorage.shared.remove(tags: tags) }
     /// Method which provide the clearing tags
-    func clearTags() { FCMInternalStorage.shared.clearTags() }
+    func fcmClearTags() { FCMInternalStorage.shared.clearTags() }
 }
