@@ -187,7 +187,7 @@ extension FCMInternalStorage {
         guard let tags = tags else { return }
         FCMDispatch.enter();
         if (self.tags == nil) { self.tags = [] }
-        self.tags?.append(contentsOf: tags);
+        self.tags?.append(contentsOf: tags.map({$0.lowercased()}));
         FCMDispatch.leave();
     }
     
@@ -196,7 +196,7 @@ extension FCMInternalStorage {
     mutating func remove(tags: [String]?) {
         guard let tags = tags else { return }
         FCMDispatch.enter();
-        self.tags?.removeAll(where: {tags.contains($0)});
+        self.tags?.removeAll(where: {tags.map({$0.lowercased()}).contains($0)});
         FCMDispatch.leave();
     }
     
