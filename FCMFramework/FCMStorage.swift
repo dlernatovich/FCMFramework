@@ -78,33 +78,33 @@ public extension FCMStorage {
 public extension FCMStorage {
     /// Method which provide the get all notifications with tags
     /// - Parameter tags: array of tags
-    func fcmNotifications(tags: [String]?) -> [FCMModel] {
-        return FCMInternalStorage.shared.search(by: tags);
+    func fcmNotifications(tags: [String]?, needUntagged: Bool = false) -> [FCMModel] {
+        return FCMInternalStorage.shared.search(by: tags, needUntagged: needUntagged);
     }
     /// Method which provide the get all notifications with tags
     /// - Parameter tags: array of tags
-    func fcmReadedNotifications(tags: [String]?) -> [FCMModel] {
-        return fcmNotifications(tags: tags).filter({$0.isReaded == true});
+    func fcmReadedNotifications(tags: [String]?, needUntagged: Bool = false) -> [FCMModel] {
+        return fcmNotifications(tags: tags, needUntagged: needUntagged).filter({$0.isReaded == true});
     }
     /// Method which provide the get all notifications with tags
     /// - Parameter tags: array of tags
-    func fcmUnreadedNotifications(tags: [String]?) -> [FCMModel] {
-        return fcmNotifications(tags: tags).filter({$0.isReaded == false});
+    func fcmUnreadedNotifications(tags: [String]?, needUntagged: Bool = false) -> [FCMModel] {
+        return fcmNotifications(tags: tags, needUntagged: needUntagged).filter({$0.isReaded == false});
     }
     /// Method which provide the get all notifications with tags
     /// - Parameter tags: array of tags
-    func fcmAllCount(tags: [String]?) -> Int {
-        return fcmNotifications(tags: tags).count;
+    func fcmAllCount(tags: [String]?, needUntagged: Bool = false) -> Int {
+        return fcmNotifications(tags: tags, needUntagged: needUntagged).count;
     }
     /// Method which provide the get all notifications with tags
     /// - Parameter tags: array of tags
-    func fcmReadedCount(tags: [String]?) -> Int {
-        return fcmReadedNotifications(tags: tags).count;
+    func fcmReadedCount(tags: [String]?, needUntagged: Bool = false) -> Int {
+        return fcmReadedNotifications(tags: tags, needUntagged: needUntagged).count;
     }
     /// Method which provide the get all notifications with tags
     /// - Parameter tags: array of tags
-    func fcmUnreadedCount(tags: [String]?) -> Int {
-        return fcmUnreadedNotifications(tags: tags).count;
+    func fcmUnreadedCount(tags: [String]?, needUntagged: Bool = false) -> Int {
+        return fcmUnreadedNotifications(tags: tags, needUntagged: needUntagged).count;
     }
     /// Method which provide the remove models by tags
     /// - Parameter tags: array of the tags

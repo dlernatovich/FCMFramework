@@ -56,8 +56,13 @@ public extension FCMModel {
 /// Search tag extension
 public extension FCMModel {
     /// Method which provide the checking if the model contain tags
-    /// - Parameter tag: {@link String} value of tag
-    func contains(tags: [String]?) -> Bool {
+    /// - Parameters:
+    ///   - tags: {@link String} value of tag
+    ///   - needUntagged: if we need untagged
+    func contains(tags: [String]?, needUntagged: Bool = false) -> Bool {
+        if needUntagged == true, (self.tags == nil || self.tags?.count == 0) {
+            return true;
+        }
         guard let searchTags = tags, let selfTags = self.tags else { return false }
         for tag in searchTags {
             if selfTags.contains(tag.lowercased()) == true { return true }

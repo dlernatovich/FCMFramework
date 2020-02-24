@@ -76,3 +76,9 @@ public func fcmUnsubscribe(channels channelNames:[String]?) {
         Messaging.messaging().unsubscribe(fromTopic: channel);
     }
 }
+
+/// Method which provide the set of the badge count
+/// - Parameter badgeCount: value
+public func fcmSet(badgeCount: Int) {
+    UIApplication.shared.applicationIconBadgeNumber = badgeCount;
+}

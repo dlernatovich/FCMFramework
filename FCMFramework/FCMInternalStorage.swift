@@ -149,11 +149,14 @@ extension FCMInternalStorage {
 extension FCMInternalStorage {
     
     /// Method which provide the search by tags
-    /// - Parameter tags: array of the tags
-    func search(by tags: [String]?) -> [FCMModel] {
+    /// - Parameters:
+    ///   - tags: array of the tags
+    ///   - needUntagged: if we need no tags
+    func search(by tags: [String]?,
+                needUntagged: Bool = false) -> [FCMModel] {
         guard let tags = tags,
             let notifications: Set<FCMModel> = self.models?.items else { return [] }
-        return Array(notifications.filter({$0.contains(tags: tags) == true}));
+        return Array(notifications.filter({$0.contains(tags: tags, needUntagged: needUntagged) == true}));
     }
     
     /// Method which provide the remove models by tags
