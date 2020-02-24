@@ -11,17 +11,17 @@ import UIKit
 /// Struct which provide the FCM model container
 public struct FCMModel: Codable, Hashable {
     /// {@link String} value of the id
-    var id: String;
+    public var id: String;
     /// {@link Date} value of the creating/recieving notification
-    @DateValue var date: Date;
+    @DateValue public var date: Date;
     /// {@link String} value of the title
-    var title: String;
+    public var title: String;
     /// {@link String} value of the body
-    var body: String;
+    public var body: String;
     /// {@link Bool} value if it readed
-    var isReaded: Bool;
+    public var isReaded: Bool;
     /// Array of the tags
-    var tags: [String]?;
+    public var tags: [String]?;
     /// Method which provide the hash functionality
     /// - Parameter hasher: instance of the {@link Hasher}
     public func hash(into hasher: inout Hasher) {

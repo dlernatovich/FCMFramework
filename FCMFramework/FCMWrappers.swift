@@ -11,17 +11,17 @@ import UIKit
 // ================================================================================================================
 /// Positive wrapper
 @propertyWrapper
-struct DateValue: Codable, Hashable {
+public struct DateValue: Codable, Hashable {
     /// Number value
     private var value: TimeInterval;
     /// Wrapped value
-    var wrappedValue: Date {
+    public var wrappedValue: Date {
         get { return Date(timeIntervalSince1970: value) }
         set { value = newValue.timeIntervalSince1970 }
     }
     /// Constructor for the wrapper
     /// - Parameter initialValue: initial value
-    init(wrappedValue initialValue: Date) {
+    public init(wrappedValue initialValue: Date) {
         self.value = initialValue.timeIntervalSince1970;
     }
 }
