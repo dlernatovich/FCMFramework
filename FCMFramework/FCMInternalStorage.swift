@@ -117,7 +117,8 @@ extension FCMInternalStorage {
         FCMDispatch.enter();
         if var model = self.models,
             let id = id,
-            var first = model.items.first(where: {$0.id == id}) {
+            var first = model.items.first(where: {$0.id == id}),
+            first.isReaded != isReaded {
             first.isReaded = isReaded;
             model.items.update(with: first);
             self.models = model;
