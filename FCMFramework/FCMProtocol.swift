@@ -126,9 +126,7 @@ public extension FCMProtocol {
         completionHandler();
         self.fcmFetch(with: userInfo,
                       withDate: response.notification.date,
-                      withId: response.notification.request.identifier,
-                      readed: true,
-                      forced: true);
+                      withId: response.notification.request.identifier);
     }
     
 }
