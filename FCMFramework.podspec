@@ -15,9 +15,9 @@ Pod::Spec.new do |spec|
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.platform     = :ios
-  spec.ios.deployment_target = '10.0'
+  spec.ios.deployment_target = '12.0'
   spec.requires_arc = true
-  spec.swift_version = '4.0'
+  spec.swift_version = '5.0'
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.source       = { :git => "https://github.com/dlernatovich/FCMFramework.git" }
