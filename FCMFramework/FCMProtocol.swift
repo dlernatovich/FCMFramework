@@ -145,15 +145,6 @@ public extension FCMProtocol {
         FCMInternalStorage.shared.fcmToken = fcmToken;
         debugPrint(with: "Firebase registration token: \(fcmToken)")
     }
-    
-    /// Method which provide the action when the user recieve of the remote message
-    /// - Parameters:
-    ///   - messaging: instance of the {@link Messaging}
-    ///   - remoteMessage: instance of the {@link MessagingRemoteMessage}
-    func fcmMessaging(_ messaging: Messaging,
-                      didReceive remoteMessage: MessagingRemoteMessage) {
-        debugPrint(with: "Received data message: \(remoteMessage.appData)");
-    }
 }
 
 // ================================================================================================================
