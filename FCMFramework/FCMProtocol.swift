@@ -34,7 +34,7 @@ public extension FCMProtocol {
                 debugPrint(with: "apnsRegister -> Permission granted: \(granted)");
                 guard granted else { return }
                 self?.apnsPermissionGranted();
-        }
+            }
     }
     
     /// Method which provide the action when the apns permission granted
@@ -175,8 +175,10 @@ public extension FCMProtocol {
     private func fcmCenterFetch() {
         FCMDispatch.enter();
         UNUserNotificationCenter.current().getDeliveredNotifications
-            { [weak self] (notifications) in
+        { [weak self] (notifications) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 self?.fcmCenterFetch(notifications: notifications);
+            })
         }
     }
     
@@ -213,7 +215,7 @@ public extension FCMProtocol {
                               forced: Bool = false) {
         FCMDispatch.enter();
         if let date = date,
-            let id = id {
+           let id = id {
             let object = FCMModel(id: id,
                                   date: date,
                                   title: userInfo.title ?? "",
