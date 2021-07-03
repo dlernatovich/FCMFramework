@@ -18,6 +18,8 @@ public struct FCMModel: Codable, Hashable {
     public var title: String;
     /// {@link String} value of the body
     public var body: String;
+    /// {@link String} value of the imageUrl
+    public var imageUrl: String?;
     /// {@link Bool} value if it readed
     public var isReaded: Bool;
     /// Array of the tags

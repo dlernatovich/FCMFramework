@@ -34,7 +34,7 @@ public extension FCMProtocol {
                 debugPrint(with: "apnsRegister -> Permission granted: \(granted)");
                 guard granted else { return }
                 self?.apnsPermissionGranted();
-        }
+            }
     }
     
     /// Method which provide the action when the apns permission granted
@@ -145,15 +145,6 @@ public extension FCMProtocol {
         FCMInternalStorage.shared.fcmToken = fcmToken;
         debugPrint(with: "Firebase registration token: \(fcmToken)")
     }
-    
-    /// Method which provide the action when the user recieve of the remote message
-    /// - Parameters:
-    ///   - messaging: instance of the {@link Messaging}
-    ///   - remoteMessage: instance of the {@link MessagingRemoteMessage}
-    func fcmMessaging(_ messaging: Messaging,
-                      didReceive remoteMessage: MessagingRemoteMessage) {
-        debugPrint(with: "Received data message: \(remoteMessage.appData)");
-    }
 }
 
 // ================================================================================================================
@@ -184,8 +175,10 @@ public extension FCMProtocol {
     private func fcmCenterFetch() {
         FCMDispatch.enter();
         UNUserNotificationCenter.current().getDeliveredNotifications
-            { [weak self] (notifications) in
+        { [weak self] (notifications) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 self?.fcmCenterFetch(notifications: notifications);
+            })
         }
     }
     
@@ -199,6 +192,7 @@ public extension FCMProtocol {
                                   date: notification.date,
                                   title: userInfo.title ?? "",
                                   body: userInfo.body ?? "",
+                                  imageUrl: userInfo.imageUrl ?? "",
                                   isReaded: false,
                                   tags: FCMInternalStorage.shared.tags);
             models.append(object);
@@ -222,11 +216,12 @@ public extension FCMProtocol {
                               forced: Bool = false) {
         FCMDispatch.enter();
         if let date = date,
-            let id = id {
+           let id = id {
             let object = FCMModel(id: id,
                                   date: date,
                                   title: userInfo.title ?? "",
                                   body: userInfo.body ?? "",
+                                  imageUrl: userInfo.imageUrl,
                                   isReaded: readed,
                                   tags: FCMInternalStorage.shared.tags);
             FCMInternalStorage.shared.insert(models: [object], forced: forced);
