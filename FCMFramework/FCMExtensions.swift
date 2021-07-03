@@ -55,4 +55,12 @@ extension Dictionary {
         }
         return nil;
     }
+    
+    var imageUrl:String? {
+        let userInfo = self as [AnyHashable: Any];
+        if let imageUrl = userInfo["gcm.notification.media-url"] as? String {
+            return imageUrl
+        }
+        return nil;
+    }
 }
