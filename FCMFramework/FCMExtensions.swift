@@ -58,7 +58,7 @@ extension Dictionary {
     
     var imageUrl:String? {
         let userInfo = self as [AnyHashable: Any];
-        if let imageUrl = userInfo["gcm.notification.media-url"] as? String {
+        if let imageUrl = userInfo["gcm.notification.imageUrl"] as? String {
             return imageUrl
         }
         return nil;
